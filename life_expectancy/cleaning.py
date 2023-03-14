@@ -6,9 +6,8 @@ import pathlib
 import pandas as pd
 
 
-#pathlib.Path = pathlib.Path(__file__).parent / 'data'
-life_path = pathlib.Path(__file__).parent # pathlib.Path.cwd()
-data_path = life_path / 'data' # life_path.joinpath('data')
+life_path = pathlib.Path(__file__).parent
+data_path = life_path / 'data'
 FILE_NAME = 'eu_life_expectancy_raw.tsv'
 
 def load_data(file_name: str)-> pd.DataFrame:
