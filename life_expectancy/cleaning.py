@@ -6,15 +6,24 @@ import pathlib
 import pandas as pd
 
 
-life_path = pathlib.Path(__file__).parent
-data_path = life_path / 'data'
-FILE_NAME = 'eu_life_expectancy_raw.tsv'
+PARENT_PATH = pathlib.Path(__file__).parent
+FILE_PATH = PARENT_PATH / 'data'
+INPUT_FILE_NAME = 'eu_life_expectancy_raw.tsv'
+OUTPUT_FILE_NAME = 'pt_life_expectancy.csv'
+INPUT_FILE_PATH = FILE_PATH / INPUT_FILE_NAME
+OUTPUT_FILE_PATH = FILE_PATH / OUTPUT_FILE_NAME
 
-def load_data(file_name: str)-> pd.DataFrame:
+
+def load_data(file_path: str)-> pd.DataFrame:
     """
         Function to load data from data folder, given a file_name
     """
-    df_expectancy = pd.read_csv(data_path / file_name, sep = '\t')
+    try:
+        df_expectancy = pd.read_csv(file_path, sep = '\t')
+    except FileNotFoundError:
+        print('File not found!')
+    except pd.errors.ParserError:
+        print('Error parsing the file!')
     return df_expectancy
 
 def clean_data(df_expectancy: pd.DataFrame, country: str = 'PT') -> pd.DataFrame:
@@ -38,7 +47,6 @@ def clean_data(df_expectancy: pd.DataFrame, country: str = 'PT') -> pd.DataFrame
 
     # allowing only floats as values to 'value' column
     df_simple['value'] = (df_simple['value'].str.extract(r'(\d+\.?\d*)').astype(float))
-    df_simple = df_simple.dropna(subset=['value'])
 
     df_simple.dropna(subset=['value'], inplace = True)
 
@@ -47,20 +55,27 @@ def clean_data(df_expectancy: pd.DataFrame, country: str = 'PT') -> pd.DataFrame
 
     return df_country
 
-def save_data(df_country: pd.DataFrame, file_name: str, file_path: pathlib.Path) -> None:
+def save_data(df_country: pd.DataFrame, file_path: pathlib.Path) -> None:
     """
         Function to save data, given a file_name and a path
     """
-    df_country.to_csv(file_path / file_name, index = False)
+    try:
+        df_country.to_csv(file_path, index = False)
+
+    except PermissionError:
+        print('Permission denied to write the file!')
+    except FileNotFoundError:
+        print('File not found!')
+
 
 
 def main(country: str) -> None:
     """
         Function that loads, cleans and saves data
     """
-    data_df = load_data(FILE_NAME)
+    data_df = load_data(INPUT_FILE_PATH)
     clean_df = clean_data(df_expectancy = data_df, country = country)
-    save_data(df_country = clean_df, file_name = 'pt_life_expectancy.csv', file_path = data_path)
+    save_data(df_country = clean_df, file_path = OUTPUT_FILE_PATH)
 
 if __name__ == "__main__":
 
