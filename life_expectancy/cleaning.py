@@ -67,7 +67,7 @@ def save_data(df_country: pd.DataFrame, file_path: pathlib.Path) -> None:
         print('Permission denied to write the file!')
     except FileNotFoundError: #pragma: no cover
         print('File not found!')
-    
+
 
 
 def main(country: str = 'PT') -> None:
@@ -84,4 +84,3 @@ if __name__ == "__main__": #pragma: no cover
     parser.add_argument('country')
     args = parser.parse_args()
     main(args.country)
-
