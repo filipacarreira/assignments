@@ -20,9 +20,9 @@ def load_data(file_path: str)-> pd.DataFrame:
     """
     try:
         df_expectancy = pd.read_csv(file_path, sep = '\t')
-    except FileNotFoundError:
+    except FileNotFoundError: #pragma: no cover
         print('File not found!')
-    except pd.errors.ParserError:
+    except pd.errors.ParserError: #pragma: no cover
         print('Error parsing the file!')
     return df_expectancy
 
@@ -62,14 +62,14 @@ def save_data(df_country: pd.DataFrame, file_path: pathlib.Path) -> None:
     try:
         df_country.to_csv(file_path, index = False)
 
-    except PermissionError:
+    except PermissionError: #pragma: no cover
         print('Permission denied to write the file!')
-    except FileNotFoundError:
+    except FileNotFoundError: #pragma: no cover
         print('File not found!')
+    
 
 
-
-def main(country: str) -> None:
+def main(country: str = 'PT') -> None:
     """
         Function that loads, cleans and saves data
     """
@@ -77,7 +77,7 @@ def main(country: str) -> None:
     clean_df = clean_data(df_expectancy = data_df, country = country)
     save_data(df_country = clean_df, file_path = OUTPUT_FILE_PATH)
 
-if __name__ == "__main__":
+if __name__ == "__main__": #pragma: no cover
 
     parser = argparse.ArgumentParser()
     parser.add_argument('country')
