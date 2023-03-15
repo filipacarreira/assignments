@@ -1,9 +1,10 @@
 """
 Script to load, clean and save data
 """
-import pandas as pd
 import argparse
-import pathlib
+import pandas as pd
+
+
 
 # life_path = pathlib.Path.cwd()
 # data_path = life_path.joinpath('data')
