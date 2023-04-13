@@ -1,8 +1,8 @@
 """
 Script to load, clean and save data
 """
-import pandas as pd
 import pathlib
+import pandas as pd
 
 def load_data(file_path: str)-> pd.DataFrame:
     """
@@ -10,10 +10,8 @@ def load_data(file_path: str)-> pd.DataFrame:
     """
     return pd.read_csv(file_path, sep = '\t')
 
-def save_data(df: pd.DataFrame, file_path: pathlib.Path) -> None:
+def save_data(dataframe: pd.DataFrame, file_path: pathlib.Path) -> None:
     """
         Function to save data, given a file_name and a path
     """
-    df.to_csv(file_path, index = False)
-
-
+    dataframe.to_csv(file_path, index = False)

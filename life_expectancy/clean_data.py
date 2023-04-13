@@ -7,9 +7,9 @@ def clean_data(df_expectancy: pd.DataFrame, country: str = 'PT') -> pd.DataFrame
     """
         Function to clean data
     """
-    
+
     df_copy = df_expectancy.copy()
-    
+
     # Splitting the name of the first column by ','
     new_cols = df_copy.columns[0].split(',')
 
@@ -31,6 +31,6 @@ def clean_data(df_expectancy: pd.DataFrame, country: str = 'PT') -> pd.DataFrame
     df_.dropna(subset=['value'], inplace = True)
 
     # filtering by the desired country
-    df = df_[df_['region'] == country]
+    dataframe = df_[df_['region'] == country]
 
-    return df
+    return dataframe

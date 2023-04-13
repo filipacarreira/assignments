@@ -7,7 +7,6 @@ Script to load, clean and save data
 
 import argparse
 import pathlib
-import pandas as pd
 from life_expectancy.clean_data import clean_data
 from life_expectancy.data_loading import load_data, save_data
 
@@ -27,7 +26,7 @@ def main(country: str = 'PT') -> None:
     """
     data_df = load_data(INPUT_FILE_PATH)
     clean_df = clean_data(df_expectancy = data_df, country = country)
-    save_data(df = clean_df, file_path = OUTPUT_FILE_PATH)
+    save_data(dataframe = clean_df, file_path = OUTPUT_FILE_PATH)
     return clean_df
 
 if __name__ == "__main__": #pragma: no cover
