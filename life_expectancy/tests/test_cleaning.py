@@ -2,10 +2,6 @@
 import pathlib
 import pandas as pd
 
-import sys
-
-# sys.path.append(str(pathlib.Path(__file__).parent.parent.parent))
-
 from unittest import mock
 from life_expectancy.main import main
 from life_expectancy.data_loading import load_data, save_data
@@ -18,22 +14,10 @@ PT_FILE_NAME = 'pt_life_expectancy.csv'
 EXP_FILE_PATH = DATA_PATH / EXP_FILE_NAME
 PT_FILE_PATH = DATA_PATH / PT_FILE_NAME
 
-
-#     @patch(life_expactancy.main.read_data)
-#   @patch(save)
-# def test_xxxx (mock_save, mock_read, ...)
-
-#    # Para que o mock retorne a minha fixture
-#    mock_read.return_value = minha_fixture
-   
-#    # Para que o mock realize alguma ação ao ser chamado
-#    mock_save.side_effect = print("I'm saving")
-@mock.patch('life_expactancy.main.load_data')
-@mock.patch('life_expactancy.main.clean_data')
-@mock.patch('life_expactancy.main.save_data')
 def test_main(pt_life_expectancy_expected):
     """Run the main function and compare the output to the expected output"""
-    pt_life_expectancy_actual = main('PT')
+
+    pt_life_expectancy_actual = main('PT').reset_index(drop=True)
 
     pd.testing.assert_frame_equal(
         pt_life_expectancy_actual, pt_life_expectancy_expected
