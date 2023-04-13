@@ -1,8 +1,8 @@
 """Tests for the cleaning module"""
 import pathlib
+from unittest import mock
 import pandas as pd
 
-from unittest import mock
 from life_expectancy.main import main
 from life_expectancy.data_loading import load_data, save_data
 from life_expectancy.clean_data import clean_data
@@ -23,7 +23,7 @@ def test_main(pt_life_expectancy_expected):
         pt_life_expectancy_actual, pt_life_expectancy_expected
     )
 
-    
+
 def test_load_data(eu_life_expectancy_raw):
 
     """Test load_data function"""

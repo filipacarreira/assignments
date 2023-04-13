@@ -1,6 +1,5 @@
 """Pytest configuration file"""
-from distutils.command.build_scripts import first_line_re
-from distutils.command.clean import clean
+
 import pathlib
 import pandas as pd
 import pytest
