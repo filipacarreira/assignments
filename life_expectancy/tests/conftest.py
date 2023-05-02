@@ -1,8 +1,12 @@
 """Pytest configuration file"""
+
+import pathlib
 import pandas as pd
 import pytest
 
 from . import FIXTURES_DIR, OUTPUT_DIR
+PARENT_PATH = pathlib.Path(__file__).parent
+
 
 
 @pytest.fixture(autouse=True)
@@ -16,6 +20,11 @@ def run_before_and_after_tests() -> None:
     file_path = OUTPUT_DIR / "pt_life_expectancy.csv"
     file_path.unlink(missing_ok=True)
 
+@pytest.fixture(scope="session")
+def eu_life_expectancy_raw() -> pd.DataFrame:
+    """Fixture to load the file eu_life_expectancy_raw.tsv"""
+    df = pd.read_csv(FIXTURES_DIR / "eu_life_expectancy_raw.tsv", sep="\t")
+    return df
 
 @pytest.fixture(scope="session")
 def pt_life_expectancy_expected() -> pd.DataFrame:
