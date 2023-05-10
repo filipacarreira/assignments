@@ -10,8 +10,7 @@ import pandas as pd
 
 PARENT_PATH = pathlib.Path(__file__).parent
 DATA_PATH = PARENT_PATH / 'data'
-UNZIP_PATH = DATA_PATH / 'unzipped'
-FILE_PATH = UNZIP_PATH / 'eurostat_life_expect.json'
+FILE_PATH = DATA_PATH / 'eurostat_life_expect.json'
 
 class LoadData(ABC):
     """Abstract class for loading data"""
@@ -29,7 +28,7 @@ class LoadJSON(LoadData):
     """Class for data loading for .json files inside a zipped folder"""
     def load_data(self, file_path: Union[pathlib.Path, str]) -> pd.DataFrame:
         with zipfile.ZipFile(file_path, "r") as zip_ref:
-            zip_ref.extractall(FILE_PATH)
+            zip_ref.extractall(DATA_PATH)
 
         return pd.read_json(FILE_PATH)
     

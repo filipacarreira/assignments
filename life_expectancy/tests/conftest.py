@@ -32,7 +32,7 @@ def eu_life_expectancy_raw_tsv() -> pd.DataFrame:
 @pytest.fixture(scope="session")
 def eu_life_expectancy_raw_json() -> pd.DataFrame:
     """Fixture to load the file eu_life_expectancy_raw.json"""
-    df = pd.read_csv(FIXTURES_DIR / "eu_life_expectancy_raw.json", sep="\t")
+    df = pd.read_json(FIXTURES_DIR / "eu_life_expectancy_raw.json")
     return df
 
 @pytest.fixture(scope="session")

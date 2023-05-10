@@ -41,19 +41,20 @@ class CleanTSV(CleaningData):
         df_.dropna(subset=['value'], inplace = True)
 
         # filtering by the desired country
-        dataframe = df_[df_['region'] == country]
+        dataframe = df_[df_['region'] == country.value]
 
         return dataframe
     
 class CleanJSON(CleaningData):
     """Class to clean data coming from a .json file"""
 
-    def clean_data(df: pd.DataFrame, country: Region) -> pd.DataFrame:
+    def clean_data(self, df: pd.DataFrame, country: Region) -> pd.DataFrame:
         """Cleans data"""
         df_copy = df.copy()
 
         # Drop columns that are not in the list we want
-        df_copy = df_copy.drop(columns=['flag', 'flag_detail'], index = 1)
+        df_copy = df_copy.drop(columns='flag', axis = 1)
+        df_copy = df_copy.drop(columns='flag_detail', axis = 1)
 
         # Rename columns
         df_copy = df_copy.rename(columns={'country': 'region', 'life_expectancy': 'value'})

@@ -29,7 +29,7 @@ def main(file_path: Union[str, pathlib.Path],
     file_format = os.path.splitext(file_path)[1]
     save_class = load.SaveData()
 
-    if file_format == '.json':
+    if file_format == '.zip':
         load_class = load.ApplyLoad(load.LoadJSON)
         clean_class = clean.CleanJSON()
 
