@@ -3,10 +3,8 @@ import pathlib
 from unittest import mock
 import pandas as pd
 
+from life_expectancy import load
 from . import FIXTURES_DIR, OUTPUT_DIR
-PARENT_PATH = pathlib.Path(__file__).parent
-
-import life_expectancy.load as load
 
 PARENT_PATH = pathlib.Path(__file__).parent
 DATA_PATH = PARENT_PATH.parent / 'data'
@@ -18,13 +16,15 @@ PT_FILE_PATH = DATA_PATH / PT_FILE_NAME
 def test_load_data_tsv(eu_life_expectancy_raw_tsv):
     """Test load_data function"""
     load_class = load.ApplyLoad(load.LoadTSV)
-    dataframe = load_class.load_df(FIXTURES_DIR / 'eu_life_expectancy_raw.tsv').reset_index(drop=True)
+    dataframe = load_class.load_df(FIXTURES_DIR / 'eu_life_expectancy_raw.tsv') \
+            .reset_index(drop=True)
     pd.testing.assert_frame_equal(dataframe, eu_life_expectancy_raw_tsv)
 
 def test_load_data_json(eu_life_expectancy_raw_json):
     """Test load_data function"""
     load_class = load.ApplyLoad(load.LoadJSON)
-    dataframe = load_class.load_df(FIXTURES_DIR / 'eurostat_life_expect.zip').reset_index(drop=True)
+    dataframe = load_class.load_df(FIXTURES_DIR / 'eurostat_life_expect.zip') \
+            .reset_index(drop=True)
     pd.testing.assert_frame_equal(dataframe, eu_life_expectancy_raw_json)
 
 @mock.patch("life_expectancy.load.pd.DataFrame.to_csv")

@@ -1,24 +1,22 @@
 """Script to clean data"""
 
 from abc import ABC, abstractmethod
-import re
 import pandas as pd
-import numpy as np
 from life_expectancy.region import Region
 
 class CleaningData(ABC):
     """Abstract class for cleaning data"""
 
     @abstractmethod
-    def clean_data(self, df: pd.DataFrame, country: Region) -> pd.DataFrame:
+    def clean_data(self, df_data: pd.DataFrame, country: Region) -> pd.DataFrame:
         """Abstract method to clean the data"""
 
 class CleanTSV(CleaningData):
     """Class to clean data coming from a .tsv file"""
 
-    def clean_data(self, df: pd.DataFrame, country: Region) -> pd.DataFrame:
+    def clean_data(self, df_data: pd.DataFrame, country: Region) -> pd.DataFrame:
         """Cleans data"""
-        df_copy = df.copy()
+        df_copy = df_data.copy()
 
         # Splitting the name of the first column by ','
         new_cols = df_copy.columns[0].split(',')
@@ -44,13 +42,13 @@ class CleanTSV(CleaningData):
         dataframe = df_[df_['region'] == country.value]
 
         return dataframe
-    
+
 class CleanJSON(CleaningData):
     """Class to clean data coming from a .json file"""
 
-    def clean_data(self, df: pd.DataFrame, country: Region) -> pd.DataFrame:
+    def clean_data(self, df_data: pd.DataFrame, country: Region) -> pd.DataFrame:
         """Cleans data"""
-        df_copy = df.copy()
+        df_copy = df_data.copy()
 
         # Drop columns that are not in the list we want
         df_copy = df_copy.drop(columns='flag', axis = 1)

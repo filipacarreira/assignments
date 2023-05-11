@@ -6,8 +6,8 @@ import argparse
 import pathlib
 import os
 from typing import Union
-import life_expectancy.clean as clean
-import life_expectancy.load as load
+from life_expectancy import clean
+from life_expectancy import load
 from life_expectancy.region import Region
 
 
@@ -20,7 +20,7 @@ ZIPPED_FILE = DATA_PATH / 'eurostat_life_expect.zip'
 JSON_PATH = DATA_PATH / 'eurostat_life_expect.csv'
 
 
-def main(file_path: Union[str, pathlib.Path], 
+def main(file_path: Union[str, pathlib.Path],
     output_file: Union[str, pathlib.Path],
     country: Region) -> None:
     """
