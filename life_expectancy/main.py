@@ -6,11 +6,10 @@ import argparse
 import pathlib
 import os
 from typing import Union
+import pandas as pd
 from life_expectancy import clean
 from life_expectancy import load
 from life_expectancy.region import Region
-
-
 
 PARENT_PATH = pathlib.Path(__file__).parent
 DATA_PATH = PARENT_PATH / 'data'
@@ -19,6 +18,9 @@ CSV_PATH = DATA_PATH / 'pt_life_expectancy.csv'
 ZIPPED_FILE = DATA_PATH / 'eurostat_life_expect.zip'
 JSON_PATH = DATA_PATH / 'eurostat_life_expect.csv'
 
+def save_data(dataframe: pd.DataFrame, file_path: Union[str, pathlib.Path]) -> None:
+    """Function to save data, given a file_name and a path"""
+    dataframe.to_csv(file_path, index = False)
 
 def main(file_path: Union[str, pathlib.Path],
     output_file: Union[str, pathlib.Path],
@@ -27,19 +29,18 @@ def main(file_path: Union[str, pathlib.Path],
         Function that loads, cleans and saves data
     """
     file_format = os.path.splitext(file_path)[1]
-    save_class = load.SaveData()
 
     if file_format == '.zip':
-        load_class = load.ApplyLoad(load.LoadJSON)
+        load_class = load.LoadJSON()
         clean_class = clean.CleanJSON()
 
     elif file_format == '.tsv':
-        load_class = load.ApplyLoad(load.LoadTSV)
+        load_class = load.LoadTSV()
         clean_class = clean.CleanTSV()
 
-    dataframe = load_class.load_df(file_path)
+    dataframe = load_class.load_data(file_path)
     dataframe = clean_class.clean_data(dataframe, country)
-    save_class.save_data(dataframe, output_file)
+    save_data(dataframe, output_file)
 
     return dataframe
 

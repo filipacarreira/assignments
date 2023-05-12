@@ -37,11 +37,6 @@ def eu_life_expectancy_raw_json() -> pd.DataFrame:
     return dataframe
 
 @pytest.fixture(scope="session")
-def eurostat_life_expectancy_expected() -> pd.DataFrame:
-    """Fixture to load the expected output from json"""
-    return pd.read_csv(FIXTURES_DIR / "eurostat_life_expectancy_expected.csv")
-
-@pytest.fixture(scope="session")
 def pt_life_expectancy_expected() -> pd.DataFrame:
     """Fixture to load the expected output of the cleaning script"""
     return pd.read_csv(FIXTURES_DIR / "pt_life_expectancy_expected.csv")
