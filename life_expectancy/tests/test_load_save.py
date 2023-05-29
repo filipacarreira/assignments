@@ -3,7 +3,9 @@ import pathlib
 from unittest import mock
 import pandas as pd
 
-from life_expectancy.data_loading import load_data, save_data
+from life_expectancy import load
+from life_expectancy import main
+from . import FIXTURES_DIR, OUTPUT_DIR
 
 PARENT_PATH = pathlib.Path(__file__).parent
 DATA_PATH = PARENT_PATH.parent / 'data'
@@ -12,15 +14,22 @@ PT_FILE_NAME = 'pt_life_expectancy.csv'
 EXP_FILE_PATH = DATA_PATH / EXP_FILE_NAME
 PT_FILE_PATH = DATA_PATH / PT_FILE_NAME
 
-def test_load_data(eu_life_expectancy_raw):
-
+def test_load_data_tsv(eu_life_expectancy_raw_tsv):
     """Test load_data function"""
-    dataframe = load_data(EXP_FILE_PATH).reset_index(drop=True)
-    pd.testing.assert_frame_equal(dataframe, eu_life_expectancy_raw)
+    load_class = load.LoadTSV()
+    dataframe = load_class.load_data(FIXTURES_DIR / 'eu_life_expectancy_raw.tsv') \
+            .reset_index(drop=True)
+    pd.testing.assert_frame_equal(dataframe, eu_life_expectancy_raw_tsv)
 
-@mock.patch("life_expectancy.data_loading.pd.DataFrame.to_csv")
+def test_load_data_json(eu_life_expectancy_raw_json):
+    """Test load_data function"""
+    load_class = load.LoadJSON()
+    dataframe = load_class.load_data(FIXTURES_DIR / 'eurostat_life_expect.zip')
+    pd.testing.assert_frame_equal(dataframe, eu_life_expectancy_raw_json)
+
+@mock.patch("life_expectancy.load.pd.DataFrame.to_csv")
 def test_save_data(mock_to_csv, pt_life_expectancy_expected):
 
     """Test save_data function"""
-    save_data(pt_life_expectancy_expected, PT_FILE_PATH)
-    mock_to_csv.assert_called_with(PT_FILE_PATH, index=False)
+    main.save_data(pt_life_expectancy_expected, OUTPUT_DIR / 'pt_life_expectancy.csv')
+    mock_to_csv.assert_called_with(OUTPUT_DIR / 'pt_life_expectancy.csv', index=False)

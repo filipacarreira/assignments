@@ -22,3 +22,10 @@ omit = [
 
 [tool.coverage.report]
 fail_under = 80
+
+[tool.pylint."messages control"]
+
+disable = [
+"missing-module-docstring",
+"too-few-public-methods"
+]
