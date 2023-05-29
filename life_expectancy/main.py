@@ -4,7 +4,6 @@ Script to load, clean and save data
 
 import argparse
 import pathlib
-import os
 from typing import Union
 import pandas as pd
 from life_expectancy import clean
