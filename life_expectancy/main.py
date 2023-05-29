@@ -28,7 +28,7 @@ def main(file_path: Union[str, pathlib.Path],
     """
         Function that loads, cleans and saves data
     """
-    file_format = os.path.splitext(file_path)[1]
+    file_format = file_path.suffix #os.path.splitext(file_path)[1]
 
     if file_format == '.zip':
         load_class = load.LoadJSON()

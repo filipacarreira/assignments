@@ -24,8 +24,7 @@ def test_load_data_tsv(eu_life_expectancy_raw_tsv):
 def test_load_data_json(eu_life_expectancy_raw_json):
     """Test load_data function"""
     load_class = load.LoadJSON()
-    dataframe = load_class.load_data(FIXTURES_DIR / 'eurostat_life_expect.zip') \
-            .reset_index(drop=True)
+    dataframe = load_class.load_data(FIXTURES_DIR / 'eurostat_life_expect.zip')
     pd.testing.assert_frame_equal(dataframe, eu_life_expectancy_raw_json)
 
 @mock.patch("life_expectancy.load.pd.DataFrame.to_csv")
